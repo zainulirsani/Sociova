@@ -1,0 +1,95 @@
+/* resources/css/app.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    /* Updated color tokens to match journal design brief with soft cream background and warm accents */
+    :root {
+        --background: #fefce8; /* Soft cream */
+        --foreground: #4b5563; /* Dark gray */
+        --card: #ffffff; /* White for input area */
+        --card-foreground: #4b5563; /* Dark gray for text */
+        --popover: #ffffff; /* White */
+        --popover-foreground: #4b5563; /* Dark gray */
+        --primary: #a16207; /* Warm yellow for buttons */
+        --primary-foreground: #ffffff; /* White */
+        --secondary: #4b5563; /* Dark gray */
+        --secondary-foreground: #fefce8; /* Soft cream */
+        --muted: #fefce8; /* Soft cream */
+        --muted-foreground: #4b5563; /* Dark gray */
+        --accent: #a16207; /* Warm yellow */
+        --accent-foreground: #ffffff; /* White */
+        --destructive: #dc2626; /* Red for error states */
+        --destructive-foreground: #ffffff; /* White */
+        --border: #e5e7eb; /* Light gray */
+        --input: #ffffff; /* White */
+        --ring: #a16207; /* Warm yellow */
+        --chart-1: #f59e0b; /* Accent color */
+        --chart-2: #dc2626; /* Red */
+        --chart-3: #1f2937; /* Dark gray */
+        --chart-4: #8b5cf6; /* Purple */
+        --chart-5: #4b5563; /* Dark gray */
+        --radius: 0.5rem; /* Soft corner rounding */
+        --sidebar: #fefce8; /* Soft cream */
+        --sidebar-foreground: #4b5563; /* Dark gray */
+        --sidebar-primary: #ffffff; /* White */
+        --sidebar-primary-foreground: #4b5563; /* Dark gray */
+        --sidebar-accent: #a16207; /* Warm yellow */
+        --sidebar-accent-foreground: #ffffff; /* White */
+        --sidebar-border: #e5e7eb; /* Light gray */
+        --sidebar-ring: #a16207; /* Warm yellow */
+        --primary-translucent: #a162071A; /* 10% opacity dari #a16207 */
+        --secondary-translucent: #4b55631A; /* 10% opacity dari #4b5563 */
+        --accent-translucent: #a162071A; /* 10% opacity dari #a16207 */
+    }
+
+    /* Updated dark mode tokens to maintain calming theme with darker cream tones */
+    .dark {
+        --background: #1c1917; /* Dark brown-cream background */
+        --foreground: #fef3c7; /* Light cream text */
+        --card: #292524; /* Darker brown-cream cards */
+        --card-foreground: #fef3c7;
+        --popover: #292524;
+        --popover-foreground: #fef3c7;
+        --primary: #f59e0b; /* Brighter warm yellow for dark mode */
+        --primary-foreground: #1c1917;
+        --secondary: #78716c; /* Lighter gray for dark mode */
+        --secondary-foreground: #1c1917;
+        --muted: #292524;
+        --muted-foreground: #a8a29e;
+        --accent: #f59e0b; /* Brighter warm yellow */
+        --accent-foreground: #1c1917;
+        --destructive: #dc2626;
+        --destructive-foreground: #ffffff;
+        --border: #44403c;
+        --input: #292524;
+        --ring: #f59e0b;
+        --chart-1: #f59e0b;
+        --chart-2: #dc2626;
+        --chart-3: #1f2937;
+        --chart-4: #8b5cf6;
+        --chart-5: #4b5563;
+        --sidebar: #1c1917;
+        --sidebar-foreground: #fef3c7;
+        --sidebar-primary: #f59e0b;
+        --sidebar-primary-foreground: #1c1917;
+        --sidebar-accent: #f59e0b;
+        --sidebar-accent-foreground: #1c1917;
+        --sidebar-border: #44403c;
+        --sidebar-ring: #f59e0b;
+        --primary-translucent: #f59e0b1A;
+        --secondary-translucent: #78716c1A;
+        --accent-translucent: #f59e0b1A;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
