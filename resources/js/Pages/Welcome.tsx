@@ -1,8 +1,8 @@
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
 
 // UI Components from shadcn/ui (adjust path if necessary)
-import { Button } from "@/components/ui/button";
+import { Button } from "@/Components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/Components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 import {
@@ -17,17 +17,30 @@ import {
 import SiteHeader from '@/Components/SiteHeader';
 // Icons from lucide-react
 import { Star, ArrowRight, BrainCircuit, BarChart, PenSquare, GraduationCap, CircleUser } from "lucide-react";
-
-// --- KOMPONEN HEADER/NAVBAR YANG SUDAH DIPERBAIKI ---
-
-
+import { Toaster, toast } from 'sonner'; // Tambahkan Toaster dan toast
 
 // --- KOMPONEN UTAMA HALAMAN LANDING PAGE ---
 export default function Welcome({ auth }: PageProps) {
+    const handleContributeClick = () => {
+        // Cek apakah user ada DAN rolenya adalah 'mahasiswa'
+        // Anda mungkin perlu menyesuaikan 'auth.user.role' sesuai struktur data Anda
+        if (auth.user && auth.user.role === 'student') {
+            router.get(route('mahasiswa.kelas'));
+        } else {
+            // Jika tidak, tampilkan notifikasi
+            toast.error("Silakan login sebagai mahasiswa", {
+                description: "Anda harus login dengan akun mahasiswa untuk dapat berkontribusi.",
+                // action: {
+                //     label: "Login",
+                //     onClick: () => router.get(route('login')),
+                // },
+            });
+        }
+    };
     return (
         <div className="min-h-screen bg-background text-foreground antialiased">
             <SiteHeader />
-
+            <Toaster richColors position="top-center" />
             <main>
                 {/* --- HERO SECTION --- */}
                 <section className="relative overflow-hidden pt-24 pb-32 lg:pt-32 lg:pb-40">
@@ -44,17 +57,20 @@ export default function Welcome({ auth }: PageProps) {
                                 Sociova adalah platform berbasis AI yang membantu dosen memahami dinamika kelas. Mahasiswa berbagi cerita dan refleksi untuk memberikan wawasan berharga demi peningkatan kualitas pembelajaran.
                             </p>
                             <div className="mt-10 flex items-center justify-center gap-4">
-                                <Button size="lg" className="px-8 py-6 text-lg" asChild>
-                                    <Link href={auth.user ? route('dashboard') : route('register')}>
-                                        Mulai Sekarang <ArrowRight className="ml-2 h-5 w-5" />
-                                    </Link>
+                                 <Button
+                                    size="lg"
+                                    className="px-8 py-6 text-lg"
+                                    onClick={handleContributeClick} // Gunakan onClick di sini
+                                >
+                                   Mulai Sekarang <ArrowRight className="ml-2 h-5 w-5" />
                                 </Button>
+                                
                             </div>
                         </div>
                     </div>
                 </section>
 
-                 {/* --- FEATURES SECTION --- */}
+                {/* --- FEATURES SECTION --- */}
                 <section id="features" className="py-20 lg:py-24 bg-card border-y">
                     <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="text-center lg:max-w-3xl mx-auto mb-16">
@@ -161,11 +177,13 @@ export default function Welcome({ auth }: PageProps) {
                                 Berdayakan dosen dengan wawasan mendalam dan berikan mahasiswa platform untuk berefleksi. Mari bersama-sama kita tingkatkan kualitas pendidikan.
                             </p>
                             <div className="mt-8">
-                                <Button size="lg" className="px-8 py-6 text-lg" asChild>
-                                    <Link href="/Evaluasi">
-                                        Mulai Berkontribusi
-                                        <PenSquare className="ml-2 h-5 w-5" />
-                                    </Link>
+                                <Button
+                                    size="lg"
+                                    className="px-8 py-6 text-lg"
+                                    onClick={handleContributeClick} // Gunakan onClick di sini
+                                >
+                                    Mulai Berkontribusi
+                                    <PenSquare className="ml-2 h-5 w-5" />
                                 </Button>
                                 <p className="mt-4 text-sm text-muted-foreground">
                                     Mudah untuk memulai • Terintegrasi dengan proses belajar

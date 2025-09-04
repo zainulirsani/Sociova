@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { Button } from "@/components/ui/button"; // Pastikan path ini benar
+import { Button } from "@/Components/ui/button"; // Pastikan path ini benar
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card"; // Pastikan path ini benar
 import { BookText, Save, ArrowLeft } from "lucide-react";
 import { Link, useForm } from '@inertiajs/react';
