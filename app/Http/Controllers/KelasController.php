@@ -57,27 +57,27 @@ class KelasController extends Controller
         }
     }
 
-    // public function storeSesi(Request $request, Kelas $kelas)
-    // {
-    //     // PERBAIKAN: Sesuaikan aturan validasi dengan data dari form React
-    //     $validatedData = $request->validate([
-    //         'topik'        => 'required|string|max:255',
-    //         'pertemuan_ke' => 'required|integer|min:1',
-    //         'deskripsi'    => 'nullable|string',
-    //         'status'       => 'required|in:upcoming,open,closed',
-    //     ]);
+    public function storeSesi(Request $request, Kelas $kelas)
+    {
+        // PERBAIKAN: Sesuaikan aturan validasi dengan data dari form React
+        $validatedData = $request->validate([
+            'topik'        => 'required|string|max:255',
+            'pertemuan_ke' => 'required|integer|min:1',
+            'deskripsi'    => 'nullable|string',
+            'status'       => 'required|in:upcoming,open,closed',
+        ]);
 
-    //     try {
-    //         // PERBAIKAN: Kirim data yang sudah divalidasi ke service
-    //         $this->kelasService->createSesiPembelajaran($kelas, $validatedData);
+        try {
+            // PERBAIKAN: Kirim data yang sudah divalidasi ke service
+            $this->kelasService->createSesiPembelajaran($kelas, $validatedData);
 
-    //         return redirect()->route('dosen.kelas.show', $kelas->id)
-    //             ->with('success', 'Sesi pembelajaran berhasil ditambahkan.');
-    //     } catch (\Exception $e) {
-    //         // Menangani error dari service
-    //         return back()->withErrors(['error' => 'Gagal menambahkan sesi: ' . $e->getMessage()]);
-    //     }
-    // }
+            return redirect()->route('dosen.kelas.show', $kelas->id)
+                ->with('success', 'Sesi pembelajaran berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            // Menangani error dari service
+            return back()->withErrors(['error' => 'Gagal menambahkan sesi: ' . $e->getMessage()]);
+        }
+    }
 
     public function update(Request $request, Kelas $kelas)
     {
