@@ -31,9 +31,13 @@ jobs:
         echo "COMMIT_HASH=$(git log -1 --pretty=%H)" >> $GITHUB_ENV
         echo "AUTHOR_NAME=$(git log -1 --pretty=%an)" >> $GITHUB_ENV
         echo "CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_ENV
+
+    # 3. Langkah debugging sementara untuk mengecek nilai secret
     - name: Debug URL Endpoint
-      run: echo "URL yang digunakan adalah: ${{ secrets.LARAVEL_REPORT_ENDPOINT }}"
-    # 3. Mengirim data yang sudah dikumpulkan ke API Laravel kita
+      run: |
+        echo "URL yang digunakan adalah: '${{ secrets.LARAVEL_REPORT_ENDPOINT}}'"
+
+    # 4. Mengirim data yang sudah dikumpulkan ke API Laravel kita
     - name: Send data to Laravel App
       run: |
         curl -X POST "${{ secrets.LARAVEL_REPORT_ENDPOINT }}" \
