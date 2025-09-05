@@ -140,34 +140,34 @@ class KelasController extends Controller
         }
     }
     
-    // public function join(Request $request)
-    // {
-    //     // 1. Validasi input dari frontend
-    //     // Gunakan 'class_code' agar sesuai dengan form di React
-    //     $request->validate([
-    //         'class_code' => 'required|string|max:10',
-    //     ]);
+    public function join(Request $request)
+    {
+        // 1. Validasi input dari frontend
+        // Gunakan 'class_code' agar sesuai dengan form di React
+        $request->validate([
+            'class_code' => 'required|string|max:10',
+        ]);
 
-    //     // dd($request->all());
+        // dd($request->all());
 
-    //     try {
-    //         // 2. Panggil service untuk menjalankan logika utama
-    //         // Gunakan 'class_code' juga di sini
-    //         $kelas = $this->kelasService->joinKelas($request->input('class_code'));
+        try {
+            // 2. Panggil service untuk menjalankan logika utama
+            // Gunakan 'class_code' juga di sini
+            $kelas = $this->kelasService->joinKelas($request->input('class_code'));
 
-    //         // 3. Jika berhasil, redirect dengan pesan sukses
-    //         return redirect()->route('mahasiswa.dashboard')->with('success', 'Berhasil bergabung ke kelas: ' . $kelas->nama);
-    //     } catch (ValidationException $e) {
-    //         // 4. Tangkap ValidationException secara spesifik
-    //         // Exception ini akan otomatis me-redirect kembali dengan error
-    //         // yang terikat pada field yang benar.
-    //         throw $e;
-    //     } catch (\Exception $e) {
-    //         // 5. Tangkap error umum lainnya jika ada
-    //         // Error ini akan muncul sebagai error global di frontend
-    //         return back()->withErrors([
-    //             'class_code' => 'Terjadi kesalahan tak terduga: ' . $e->getMessage()
-    //         ]);
-    //     }
-    // }
+            // 3. Jika berhasil, redirect dengan pesan sukses
+            return redirect()->route('mahasiswa.dashboard')->with('success', 'Berhasil bergabung ke kelas: ' . $kelas->nama);
+        } catch (ValidationException $e) {
+            // 4. Tangkap ValidationException secara spesifik
+            // Exception ini akan otomatis me-redirect kembali dengan error
+            // yang terikat pada field yang benar.
+            throw $e;
+        } catch (\Exception $e) {
+            // 5. Tangkap error umum lainnya jika ada
+            // Error ini akan muncul sebagai error global di frontend
+            return back()->withErrors([
+                'class_code' => 'Terjadi kesalahan tak terduga: ' . $e->getMessage()
+            ]);
+        }
+    }
 }
