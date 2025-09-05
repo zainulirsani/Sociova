@@ -99,26 +99,26 @@ class KelasController extends Controller
         }
     }
 
-    public function updateSesi(Request $request, Kelas $kelas, SesiPembelajaran $sesi)
-    {
-        // 1. Validasi data yang masuk dari form React
-        $validatedData = $request->validate([
-            'topik' => 'required|string|max:255',
-            'pertemuan_ke' => 'required|integer|min:1',
-            'deskripsi' => 'nullable|string',
-            'status' => 'required|in:upcoming,open,closed',
-        ]);
+    // public function updateSesi(Request $request, Kelas $kelas, SesiPembelajaran $sesi)
+    // {
+    //     // 1. Validasi data yang masuk dari form React
+    //     $validatedData = $request->validate([
+    //         'topik' => 'required|string|max:255',
+    //         'pertemuan_ke' => 'required|integer|min:1',
+    //         'deskripsi' => 'nullable|string',
+    //         'status' => 'required|in:upcoming,open,closed',
+    //     ]);
 
-        // 2. Panggil service untuk melakukan update
-        try {
-            $this->kelasService->updateSesi($sesi, $validatedData);
-        } catch (\Exception $e) {
-            return back()->withErrors(['error' => $e->getMessage()]);
-        }
+    //     // 2. Panggil service untuk melakukan update
+    //     try {
+    //         $this->kelasService->updateSesi($sesi, $validatedData);
+    //     } catch (\Exception $e) {
+    //         return back()->withErrors(['error' => $e->getMessage()]);
+    //     }
 
-        // 3. Redirect kembali ke halaman detail kelas
-        return redirect()->route('dosen.kelas.show', $kelas->id)->with('success', 'Sesi berhasil diperbarui.');
-    }
+    //     // 3. Redirect kembali ke halaman detail kelas
+    //     return redirect()->route('dosen.kelas.show', $kelas->id)->with('success', 'Sesi berhasil diperbarui.');
+    // }
 
     public function destroy(Kelas $kelas)
     {
