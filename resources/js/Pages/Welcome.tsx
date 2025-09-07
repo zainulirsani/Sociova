@@ -1,5 +1,6 @@
 import { Link, router, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
+import { Head, } from '@inertiajs/react';
 
 // UI Components from shadcn/ui (adjust path if necessary)
 import { Button } from "@/Components/ui/button";
@@ -18,6 +19,7 @@ import SiteHeader from '@/Components/SiteHeader';
 // Icons from lucide-react
 import { Star, ArrowRight, BrainCircuit, BarChart, PenSquare, GraduationCap, CircleUser } from "lucide-react";
 import { Toaster, toast } from 'sonner'; // Tambahkan Toaster dan toast
+import { cn } from '@/lib/utils';
 
 const resourceLinks = [
     { name: "Studi Kasus", href: "#" },
@@ -27,8 +29,26 @@ const resourceLinks = [
     { name: "Tentang Kami", href: route('tentang.kami') } // Arahkan ke route yang benar
 ];
 
+const supportLinks = [
+    { name: "Pusat Bantuan", href: "#" },
+    { name: "Hubungi Kami", href: "#" },
+    { name: "Laporkan Masalah", href: "#" },
+    { name: "Umpan Balik", href: route('umpan-balik.create') }
+];
+interface Testimonial {
+    id: number;
+    rating: number;
+    komentar: string;
+    user: {
+        name: string;
+        // Tambahkan properti lain jika perlu, misal 'role' atau 'avatar'
+    }
+}
+interface WelcomePageProps extends PageProps {
+    testimonials: Testimonial[];
+}
 // --- KOMPONEN UTAMA HALAMAN LANDING PAGE ---
-export default function Welcome({ auth }: PageProps) {
+export default function Welcome({ auth, testimonials }: WelcomePageProps) {
     const handleContributeClick = () => {
         // Cek apakah user ada DAN rolenya adalah 'mahasiswa'
         // Anda mungkin perlu menyesuaikan 'auth.user.role' sesuai struktur data Anda
@@ -46,7 +66,9 @@ export default function Welcome({ auth }: PageProps) {
         }
     };
     return (
+
         <div className="min-h-screen bg-background text-foreground antialiased">
+            <Head title="Sociova" />
             <SiteHeader />
             <Toaster richColors position="top-center" />
             <main>
@@ -128,48 +150,32 @@ export default function Welcome({ auth }: PageProps) {
                         <div className="text-center lg:max-w-3xl mx-auto mb-16">
                             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Apa Kata Mereka tentang Sociova</h2>
                             <p className="mt-4 text-lg text-muted-foreground">
-                                Pengalaman nyata dari para dosen dan mahasiswa yang telah merasakan manfaat Sociova dalam transformasi proses pembelajaran.
+                                Pengalaman nyata dari para pengguna yang telah merasakan manfaat Sociova.
                             </p>
                         </div>
+
+                        {/* Grid dinamis untuk menampilkan testimoni */}
                         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                            {[
-                                {
-                                    name: "Dr. Budi Hartono",
-                                    role: "Dosen Teknik Informatika",
-                                    avatar: "/images/diverse-male-student-confident.png",
-                                    fallback: "BH",
-                                    text: "Sebelumnya, sulit sekali mengukur pemahaman mahasiswa secara kualitatif. Berkat analisis AI dari Sociova, saya bisa mengidentifikasi bagian mana dari materi yang perlu diperbaiki. Sangat transformatif!"
-                                },
-                                {
-                                    name: "Citra Amelia",
-                                    role: "Mahasiswi",
-                                    avatar: "/images/diverse-female-student-happy.png",
-                                    fallback: "CA",
-                                    text: "Melalui Sociova, saya merasa lebih leluasa untuk menceritakan kesulitan belajar saya. Dosen menjadi lebih paham dan kelas di semester berikutnya terasa jauh lebih efektif dan menarik."
-                                },
-                                {
-                                    name: "Prof. Rina Wijayanti",
-                                    role: "Dosen Ilmu Komunikasi",
-                                    avatar: "/images/diverse-student-smiling.png",
-                                    fallback: "RW",
-                                    text: "Sociova memberikan data dan wawasan yang tidak saya dapatkan dari kuesioner biasa. Saya dapat menyesuaikan metode ajar saya secara real-time berdasarkan feedback otentik dari mahasiswa."
-                                }
-                            ].map((testimonial) => (
-                                <Card key={testimonial.name} className="flex flex-col justify-between rounded-xl bg-card border">
+                            {testimonials.map((testimonial) => (
+                                <Card key={testimonial.id} className="flex flex-col justify-between rounded-xl bg-card border">
                                     <CardContent className="pt-6">
                                         <div className="flex mb-3">
-                                            {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
+                                            {[...Array(5)].map((_, i) => (
+                                                <Star key={i} className={cn("h-4 w-4", i < testimonial.rating ? "fill-yellow-400 text-yellow-400" : "fill-muted text-muted-foreground")} />
+                                            ))}
                                         </div>
-                                        <p className="text-muted-foreground leading-relaxed italic">"{testimonial.text}"</p>
+                                        <p className="text-muted-foreground leading-relaxed italic">"{testimonial.komentar}"</p>
                                     </CardContent>
                                     <div className="flex items-center p-6 pt-4">
                                         <Avatar className="h-12 w-12 mr-4">
-                                            <AvatarImage src={testimonial.avatar} />
-                                            <AvatarFallback>{testimonial.fallback}</AvatarFallback>
+                                            {/* Ganti src dengan avatar user jika ada */}
+                                            <AvatarImage src={`https://ui-avatars.com/api/?name=${testimonial.user.name}&background=random`} />
+                                            <AvatarFallback>{testimonial.user.name.substring(0, 2)}</AvatarFallback>
                                         </Avatar>
                                         <div>
-                                            <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
-                                            <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                                            <h4 className="font-semibold text-foreground">{testimonial.user.name}</h4>
+                                            {/* Anda bisa menambahkan role user di sini jika ada */}
+                                            <p className="text-sm text-muted-foreground">Pengguna Sociova</p>
                                         </div>
                                     </div>
                                 </Card>
@@ -231,8 +237,12 @@ export default function Welcome({ auth }: PageProps) {
                         <div>
                             <h4 className="font-semibold text-foreground mb-4">Dukungan</h4>
                             <ul className="space-y-2 text-muted-foreground">
-                                {["Pusat Bantuan", "Hubungi Kami", "Laporkan Masalah", "Umpan Balik"].map(item => (
-                                    <li key={item}><a href="#" className="hover:text-primary transition-colors">{item}</a></li>
+                                {supportLinks.map(item => (
+                                    <li key={item.name}>
+                                        <Link href={item.href} className="hover:text-primary transition-colors">
+                                            {item.name}
+                                        </Link>
+                                    </li>
                                 ))}
                             </ul>
                         </div>

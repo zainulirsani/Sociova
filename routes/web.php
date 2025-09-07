@@ -7,14 +7,15 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SubmissionController;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\UmpanBalikController;
+use App\Services\UmpanBalikService;
 
-Route::get('/', function () {
+Route::get('/', function (UmpanBalikService $umpanBalikService) { // <-- 2. Inject service
+    // 3. Panggil service dan kirim datanya sebagai props 'testimonials'
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+        'testimonials' => $umpanBalikService->getFeaturedFeedback(), // <-- 4. Tambahkan ini
     ]);
 })->name('welcome');
 
@@ -35,7 +36,9 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // ... route umum seperti profile
-
+    Route::get('/umpan-balik', [UmpanBalikController::class, 'create'])->name('umpan-balik.create');
+    // Route untuk menyimpan data Umpan Balik
+    Route::post('/umpan-balik', [UmpanBalikController::class, 'store'])->name('umpan-balik.store');
     // Grup khusus untuk Dosen
     Route::middleware('role:dosen')->prefix('dosen')->name('dosen.')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'dosen'])->name('dashboardDosen');
