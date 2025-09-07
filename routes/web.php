@@ -18,7 +18,9 @@ Route::get('/', function () {
     ]);
 })->name('welcome');
 
-
+Route::get('/tentang-kami', function () {
+    return Inertia::render('TentangKami');
+})->name('tentang.kami');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

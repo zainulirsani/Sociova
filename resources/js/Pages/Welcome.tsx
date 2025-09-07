@@ -19,6 +19,14 @@ import SiteHeader from '@/Components/SiteHeader';
 import { Star, ArrowRight, BrainCircuit, BarChart, PenSquare, GraduationCap, CircleUser } from "lucide-react";
 import { Toaster, toast } from 'sonner'; // Tambahkan Toaster dan toast
 
+const resourceLinks = [
+    { name: "Studi Kasus", href: "#" },
+    { name: "Blog", href: "#" },
+    { name: "Panduan Dosen", href: "#" },
+    { name: "Kebijakan Privasi", href: "#" },
+    { name: "Tentang Kami", href: route('tentang.kami') } // Arahkan ke route yang benar
+];
+
 // --- KOMPONEN UTAMA HALAMAN LANDING PAGE ---
 export default function Welcome({ auth }: PageProps) {
     const handleContributeClick = () => {
@@ -57,14 +65,14 @@ export default function Welcome({ auth }: PageProps) {
                                 Sociova adalah platform berbasis AI yang membantu dosen memahami dinamika kelas. Mahasiswa berbagi cerita dan refleksi untuk memberikan wawasan berharga demi peningkatan kualitas pembelajaran.
                             </p>
                             <div className="mt-10 flex items-center justify-center gap-4">
-                                 <Button
+                                <Button
                                     size="lg"
                                     className="px-8 py-6 text-lg"
                                     onClick={handleContributeClick} // Gunakan onClick di sini
                                 >
-                                   Mulai Sekarang <ArrowRight className="ml-2 h-5 w-5" />
+                                    Mulai Sekarang <ArrowRight className="ml-2 h-5 w-5" />
                                 </Button>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -210,8 +218,13 @@ export default function Welcome({ auth }: PageProps) {
                         <div>
                             <h4 className="font-semibold text-foreground mb-4">Sumber Daya</h4>
                             <ul className="space-y-2 text-muted-foreground">
-                                {["Studi Kasus", "Blog", "Panduan Dosen", "Kebijakan Privasi"].map(item => (
-                                    <li key={item}><a href="#" className="hover:text-primary transition-colors">{item}</a></li>
+                                {/* 3. Gunakan data baru dan komponen Link dari Inertia */}
+                                {resourceLinks.map(item => (
+                                    <li key={item.name}>
+                                        <Link href={item.href} className="hover:text-primary transition-colors">
+                                            {item.name}
+                                        </Link>
+                                    </li>
                                 ))}
                             </ul>
                         </div>
@@ -226,6 +239,9 @@ export default function Welcome({ auth }: PageProps) {
                     </div>
                     <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
                         <p>&copy; {new Date().getFullYear()} Sociova. Platform Inovatif untuk Evaluasi Pembelajaran.</p>
+                        <p className="mt-2">
+                            Dibuat oleh Kelompok 6 - Mata Kuliah Pengembangan Pembelajaran, Universitas Mataram.
+                        </p>
                     </div>
                 </div>
             </footer>
