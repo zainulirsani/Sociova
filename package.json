@@ -68,5 +68,8 @@
         "vaul": "^0.9.9",
         "vite": "^6.0.11",
         "zod": "3.25.67"
+    },
+    "dependencies": {
+        "framer-motion": "^12.23.12"
     }
 }
